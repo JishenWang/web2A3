@@ -1,50 +1,81 @@
-<div class="container">
-  <div class="header">
-    <h2>Event Management</h2>
-    <button class="btn btn-primary" (click)="createNewEvent()">Create New Event</button>
-  </div>
-
-  <!-- Messages -->
-  <div *ngIf="deleteMessage" class="alert success">
-    {{ deleteMessage }}
+<div class="event-list-container">
+  <h2>Events Management</h2>
+  
+  <!-- 加载中状态 -->
+  <div *ngIf="loading" class="loading-indicator">
+    Loading events...
   </div>
   
-  <div *ngIf="error" class="alert error">
+  <!-- 错误提示 -->
+  <div *ngIf="error" class="alert alert-error">
     {{ error }}
   </div>
 
-  <!-- Loading -->
-  <div *ngIf="loading" class="loading">Loading events...</div>
+  <!-- 删除成功提示 -->
+  <div *ngIf="deleteMessage" class="alert alert-success">
+    {{ deleteMessage }}
+  </div>
 
-  <!-- Events Table -->
-  <div *ngIf="!loading && events.length > 0" class="table-container">
-    <table>
-      <thead>
+  <!-- 创建活动按钮 -->
+  <button 
+    (click)="createNewEvent()" 
+    class="btn btn-primary"
+    [disabled]="loading"
+  >
+    Create New Event
+  </button>
+
+  <!-- 活动列表表格（有数据时显示） -->
+  <div *ngIf="!loading && events.length > 0" class="events-table-wrapper mt-4">
+    <table class="table table-striped">
+      <thead class="table-header">
         <tr>
           <th>Title</th>
-          <th>Start Date</th>
+          <th>Date</th>
           <th>Location</th>
-          <th>Max Tickets</th>
+          <th>Category</th>
+          <th>Ticket Price</th>
+          <th>Status</th> <!-- 新增：活动状态列 -->
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let event of events">
+        <tr *ngFor="let event of events" [ngClass]="getStatusClass(getEventStatus(event))">
           <td>{{ event.title }}</td>
-          <td>{{ event.start_date | date:'short' }}</td>
+          <td>
+            <span>{{ event.start_date | date:'yyyy-MM-dd HH:mm' }}</span>
+            <span class="text-muted d-block">{{ event.end_date | date:'yyyy-MM-dd HH:mm' }}</span>
+          </td>
           <td>{{ event.location }}</td>
-          <td>{{ event.max_tickets }}</td>
-          <td class="actions">
-            <button class="btn-edit" (click)="editEvent(event.event_id!)">Edit</button>
-            <button class="btn-delete" (click)="deleteEvent(event.event_id!)">Delete</button>
+          <td>{{ event.category?.name || 'Unknown' }}</td> <!-- 安全导航：避免category为null -->
+          <td>${{ event.ticket_price }}</td>
+          <td>
+            <!-- 状态徽章：视觉区分不同状态 -->
+            <span class="status-badge" [ngClass]="getStatusClass(getEventStatus(event))">
+              {{ getEventStatus(event) }}
+            </span>
+          </td>
+          <td>
+            <button 
+              (click)="editEvent(event.id)" 
+              class="btn btn-sm btn-warning mr-2"
+            >
+              Edit
+            </button>
+            <button 
+              (click)="deleteEvent(event.id)" 
+              class="btn btn-sm btn-danger"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Empty State -->
-  <div *ngIf="!loading && events.length === 0" class="empty">
-    <p>No events found. Create your first event!</p>
+  <!-- 空状态（无活动时显示） -->
+  <div *ngIf="!loading && events.length === 0" class="empty-state mt-4 text-center">
+    <p>No events found. Click "Create New Event" to get started!</p>
   </div>
 </div>

@@ -1,27 +1,32 @@
- export interface Event {
-  event_id?: number;
-  title: string;
-  description?: string;
-  start_date: string;
-  end_date: string;
-  location: string;
-  category_id: number;
-  max_tickets: number;
-  created_at?: string;
-  registration_count?: number;
+export interface Category {
+  id: number;
+  name: string;
+  description: string;
 }
 
 export interface Registration {
-  registration_id: number;
-  event_id: number;
+  id: number;
   user_name: string;
   user_email: string;
   registration_date: string;
   ticket_count: number;
-  contact_details: string;
 }
 
-export interface Category {
+export interface Event {
+  id: number;
+  title: string;
+  description: string;
+  start_date: string; // 原 `event_date` 改为 `start_date`，与数据库/逻辑对齐
+  end_date: string;
+  location: string;
+  ticket_price: number;
   category_id: number;
-  category_name: string;
+  category: Category;
+  max_tickets: number;
+  created_at: string;
+}
+
+export interface EventDetailData {
+  event: Event;
+  registrations: Registration[];
 }

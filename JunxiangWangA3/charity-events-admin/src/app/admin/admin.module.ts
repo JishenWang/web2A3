@@ -6,7 +6,7 @@ import { EventListComponent } from './event-list/event-list.component';
 import { EventFormComponent } from './event-form/event-form.component';
 
 @NgModule({
-  declarations: [], // 清空declarations，独立组件不在这里声明
+  declarations: [], // 移除独立组件的声明
   imports: [
     CommonModule,
     AdminRoutingModule,

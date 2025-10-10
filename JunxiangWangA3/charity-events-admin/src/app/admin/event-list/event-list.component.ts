@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { EventService } from '../../services/event.service';
+import { Router, RouterModule } from '@angular/router'; // 新增 RouterModule 导入
+import { EventService } from '../../services/event.service'; 
 import { Event } from '../../models/event.model';
 import { CommonModule } from '@angular/common';
 
@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.css'],
-  standalone: true, // 必须包含这一行，标记为独立组件
-  imports: [CommonModule] // 若有依赖的其他独立组件/指令，需在此导入
+  standalone: true,
+  imports: [CommonModule, RouterModule] // 新增 RouterModule 导入（模板若用 routerLink 必需）
 })
 export class EventListComponent implements OnInit {
   events: Event[] = [];
@@ -54,32 +54,29 @@ export class EventListComponent implements OnInit {
       this.eventService.deleteEvent(eventId).subscribe({
         next: () => {
           this.deleteMessage = 'Event deleted successfully.';
-          this.loadEvents();
-          // Clear message after 3 seconds
+          this.loadEvents(); // Reload list after deletion
           setTimeout(() => this.deleteMessage = '', 3000);
         },
         error: (error) => {
           console.error('Error deleting event:', error);
-          if (error.error?.error?.includes('existing registrations')) {
-            this.error = 'Cannot delete event with existing registrations.';
-          } else {
-            this.error = 'Failed to delete event. Please try again.';
-          }
-          // Clear error after 5 seconds
+          // 优化：使用可选链避免深层访问导致的 undefined 错误
+          this.error = error?.error?.error?.includes('existing registrations') 
+            ? 'Cannot delete event with existing registrations.' 
+            : 'Failed to delete event. Please try again.';
           setTimeout(() => this.error = '', 5000);
         }
       });
     }
   }
 
+  // 修正：注释与实际使用的字段保持一致（使用 end_date 而非 event_date）
   getEventStatus(event: Event): string {
     const now = new Date();
-    const startDate = new Date(event.start_date);
-    const endDate = new Date(event.end_date);
+    const eventEndDate = new Date(event.end_date); // Use end_date from Event model
 
-    if (now < startDate) return 'Upcoming';
-    if (now > endDate) return 'Past';
-    return 'Active';
+    if (now < eventEndDate) return 'Upcoming'; // Event not ended yet
+    if (now > eventEndDate) return 'Past';     // Event has ended
+    return 'Active';                          // Event is ongoing (same day)
   }
 
   getStatusClass(status: string): string {

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-// 1. 导入路由出口组件
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true, // 标记为独立组件
+  imports: [CommonModule, RouterOutlet], // 导入所需模块
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  standalone: true, // 独立组件标记（若有此配置，需走独立组件逻辑）
-  imports: [RouterOutlet] // 2. 在 imports 中添加 RouterOutlet，使 <router-outlet> 可识别
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'charity-events-admin';

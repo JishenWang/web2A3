@@ -1,5 +1,12 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app-routing.module';
+import { provideHttpClient } from '@angular/common/http'; // 导入HTTP提供者
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch((err: any) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient() // 提供HTTP服务，使组件能注入HttpClient
+  ]
+}).catch(err => console.error(err));

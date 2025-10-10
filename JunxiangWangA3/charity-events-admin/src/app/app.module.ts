@@ -1,15 +1,15 @@
-// src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module'; // 导入独立路由模块
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http'; // 若需HTTP请求
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [],
   imports: [
     BrowserModule,
-    AppRoutingModule // 导入后，<router-outlet>即可被识别
+    AppRoutingModule,
+    HttpClientModule // 按需保留
   ],
-  bootstrap: [AppComponent]
+  providers: [], // 全局服务提供者（如无则留空）
+  // 移除 bootstrap 和 declarations（独立组件无需模块引导）
 })
 export class AppModule { }

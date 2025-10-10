@@ -1,14 +1,17 @@
-// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EventListComponent } from './admin/event-list/event-list.component';
+import { EventFormComponent } from './admin/event-form/event-form.component';
 
-// 定义应用路由（示例，根据实际需求配置）
-const routes: Routes = [
-  // 示例路由：{ path: 'home', component: HomeComponent },
+export const routes: Routes = [
+  { path: 'admin/events', component: EventListComponent },
+  { path: 'admin/events/new', component: EventFormComponent },
+  { path: 'admin/events/edit/:id', component: EventFormComponent },
+  { path: '', redirectTo: '/admin/events', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // 初始化根路由
-  exports: [RouterModule] // 关键：导出RouterModule，使主模块能使用<router-outlet>
+  imports: [RouterModule.forRoot(routes)], // 传统路由配置方式
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

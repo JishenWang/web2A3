@@ -1,13 +1,17 @@
-<nav class="admin-nav">
-  <div class="nav-container">
-    <h1>Charitable Activity Management System</h1>
-    <div class="nav-links">
-      <a routerLink="/admin/events" routerLinkActive="active">Event List</a>
-      <a routerLink="/admin/events/new" routerLinkActive="active">Create Event</a>
+<nav style="background-color: #333; color: white; padding: 16px;">
+  <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+    <span>Charity Events Admin</span>
+    <div>
+      <a routerLink="/admin/events" style="color: white; margin-right: 16px; text-decoration: none;">Events</a>
+      <a routerLink="/admin/events/new" style="color: white; text-decoration: none;">Create Event</a>
     </div>
   </div>
 </nav>
 
-<main class="main-content">
+<main style="max-width: 1200px; margin: 24px auto; padding: 0 16px;">
   <router-outlet></router-outlet>
 </main>
+
+<footer style="text-align: center; margin-top: 32px; color: #666;">
+  © 2025 Charity Events Admin. All rights reserved.
+</footer>
