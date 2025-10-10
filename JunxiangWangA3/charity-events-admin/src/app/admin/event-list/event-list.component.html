@@ -1,1 +1,50 @@
-<p>event-list works!</p>
+<div class="container">
+  <div class="header">
+    <h2>Event Management</h2>
+    <button class="btn btn-primary" (click)="createNewEvent()">Create New Event</button>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="deleteMessage" class="alert success">
+    {{ deleteMessage }}
+  </div>
+  
+  <div *ngIf="error" class="alert error">
+    {{ error }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">Loading events...</div>
+
+  <!-- Events Table -->
+  <div *ngIf="!loading && events.length > 0" class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Start Date</th>
+          <th>Location</th>
+          <th>Max Tickets</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events">
+          <td>{{ event.title }}</td>
+          <td>{{ event.start_date | date:'short' }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.max_tickets }}</td>
+          <td class="actions">
+            <button class="btn-edit" (click)="editEvent(event.event_id!)">Edit</button>
+            <button class="btn-delete" (click)="deleteEvent(event.event_id!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && events.length === 0" class="empty">
+    <p>No events found. Create your first event!</p>
+  </div>
+</div>

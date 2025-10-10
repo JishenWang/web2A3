@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
+// 导入独立组件
 import { EventListComponent } from './event-list/event-list.component';
 import { EventFormComponent } from './event-form/event-form.component';
 
 @NgModule({
-  declarations: [], // 移除独立组件的声明
+  declarations: [], // 清空declarations，独立组件不在这里声明
   imports: [
     CommonModule,
     AdminRoutingModule,
-    // 导入独立组件（替代声明）
+    // 导入独立组件
     EventListComponent,
     EventFormComponent
   ]
