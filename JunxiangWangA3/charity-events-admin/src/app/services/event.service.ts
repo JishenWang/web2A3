@@ -14,7 +14,7 @@ export class EventService {
 
   /**
    * Get all events list
-   * Returns mock data when backend API is abnormal
+   * Returns 5 mock events when backend API is abnormal
    */
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(`${this.apiUrl}/events`).pipe(
@@ -44,6 +44,45 @@ export class EventService {
           category: { id: 2, name: 'Bazaar', description: 'Bazaar-based charity activities' },
           max_tickets: 200,
           created_at: '2025-10-02T00:00:00'
+        },
+        { 
+          id: 3, 
+          title: 'Charity Lecture (Mock)', 
+          description: 'Public lecture on poverty alleviation and charity',
+          start_date: '2025-12-05T14:00:00', 
+          end_date: '2025-12-05T16:30:00',
+          location: 'City Library Auditorium',
+          ticket_price: 15,
+          category_id: 3,
+          category: { id: 3, name: 'Lecture', description: 'Knowledge-sharing charity activities' },
+          max_tickets: 150,
+          created_at: '2025-10-03T00:00:00'
+        },
+        { 
+          id: 4, 
+          title: 'Charity Gala Dinner (Mock)', 
+          description: 'Formal dinner with charity auctions and performances',
+          start_date: '2026-01-15T18:30:00', 
+          end_date: '2026-01-15T22:00:00',
+          location: 'Grand Hotel Ballroom',
+          ticket_price: 150,
+          category_id: 4,
+          category: { id: 4, name: 'Gala', description: 'Formal charity events (e.g., dinners, galas)' },
+          max_tickets: 300,
+          created_at: '2025-10-04T00:00:00'
+        },
+        { 
+          id: 5, 
+          title: 'Volunteer Recruitment (Mock)', 
+          description: 'Recruiting volunteers for upcoming charity projects',
+          start_date: '2025-10-20T10:00:00', 
+          end_date: '2025-10-20T13:00:00',
+          location: 'Community Center',
+          ticket_price: 0,
+          category_id: 5,
+          category: { id: 5, name: 'Volunteer', description: 'Volunteer recruitment activities' },
+          max_tickets: 50,
+          created_at: '2025-10-05T00:00:00'
         }
       ]))
     );
@@ -152,14 +191,16 @@ export class EventService {
 
   /**
    * Get all categories
-   * Returns mock category array when API is abnormal
+   * Returns mock category array (matching 5 event categories) when API is abnormal
    */
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/categories`).pipe(
       catchError(this.handleError<Category[]>('getCategories', [
         { id: 1, name: 'Charity Run', description: 'Running-based charity events' },
         { id: 2, name: 'Bazaar', description: 'Bazaar-based charity events' },
-        { id: 3, name: 'Public Lecture', description: 'Knowledge sharing events' }
+        { id: 3, name: 'Lecture', description: 'Knowledge sharing events' },
+        { id: 4, name: 'Gala', description: 'Formal charity events (e.g., dinners, galas)' },
+        { id: 5, name: 'Volunteer', description: 'Volunteer recruitment activities' }
       ]))
     );
   }
