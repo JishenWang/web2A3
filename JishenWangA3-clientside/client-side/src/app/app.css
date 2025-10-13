@@ -1,0 +1,10 @@
+/* 导航栏激活状态样式 */
+.nav-menu a.active {
+  color: #3498db;
+  font-weight: bold;
+}
+
+/* 主内容区域 */
+.main-content {
+  min-height: calc(100vh - 60px);
+}
