@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="home-header">
+    <h1>City Charity Events</h1>
+    <p>Join us in supporting meaningful causes! Browse our upcoming charity events and make a difference in the community.</p>
+  </div>
+
+  <div class="events-list">
+    <div *ngIf="loading" id="loading">Loading upcoming events...</div>
+    <div *ngIf="error" id="error" style="color: red; text-align: center;">{{error}}</div>
+    
+    <div *ngFor="let event of events" class="event-card">
+      <img [src]="event.image_url" [alt]="event.title">
+      <div class="event-card-content">
+        <span class="category">{{event.category_name}}</span>
+        <h3>{{event.title}}</h3>
+        <div class="details">
+          <p><strong>Date:</strong> {{formatDate(event.event_date)}}</p>
+          <p><strong>Location:</strong> {{event.location}}</p>
+          <p><strong>Ticket:</strong> <span [innerHTML]="formatPrice(event.ticket_price)"></span></p>
+        </div>
+        <a [routerLink]="['/event', event.id]" class="btn">View Details</a>
+      </div>
+    </div>
+    
+    <div *ngIf="!loading && !error && events.length === 0" style="text-align: center; width: 100%;">
+      No upcoming events found.
+    </div>
+  </div>
+</div>
