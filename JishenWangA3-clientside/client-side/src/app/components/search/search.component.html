@@ -1,0 +1,58 @@
+<div class="container">
+  <h1 style="text-align: center; margin-bottom: 2rem; color: #2c3e50;">Search Charity Events</h1>
+
+  <form (ngSubmit)="searchEvents()" class="search-form">
+    <div class="form-group">
+      <label for="startDate">Start Date (Optional)</label>
+      <input type="datetime-local" id="startDate" [(ngModel)]="searchParams.startDate" name="startDate">
+    </div>
+    <div class="form-group">
+      <label for="endDate">End Date (Optional)</label>
+      <input type="datetime-local" id="endDate" [(ngModel)]="searchParams.endDate" name="endDate">
+    </div>
+    <div class="form-group">
+      <label for="location">Location (Optional)</label>
+      <input type="text" id="location" [(ngModel)]="searchParams.location" name="location" placeholder="Enter location keyword">
+    </div>
+    <div class="form-group">
+      <label for="categoryId">Event Category (Optional)</label>
+      <select id="categoryId" [(ngModel)]="searchParams.categoryId" name="categoryId">
+        <option value="">-- Select Category --</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{category.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Search Events</button>
+      <button type="button" (click)="resetForm()" class="btn btn-reset">Clear Filters</button>
+    </div>
+  </form>
+
+  <div *ngIf="showResults" style="margin-top: 3rem;">
+    <h2>Search Results</h2>
+    <div class="events-list">
+      <div *ngIf="searching" style="text-align: center; width: 100%;">Searching events...</div>
+      <div *ngIf="searchError" style="text-align: center; width: 100%; color: red;">{{searchError}}</div>
+      
+      <div *ngFor="let event of searchResults" class="event-card">
+        <img [src]="event.image_url" [alt]="event.title">
+        <div class="event-card-content">
+          <span class="category">{{event.category_name}}</span>
+          <h3>{{event.title}}</h3>
+          <div class="details">
+            <p><strong>Date:</strong> {{formatDate(event.event_date)}}</p>
+            <p><strong>Location:</strong> {{event.location}}</p>
+            <p><strong>Ticket:</strong> <span [innerHTML]="formatPrice(event.ticket_price)"></span></p>
+          </div>
+          <a [routerLink]="['/event', event.id]" class="btn">View Details</a>
+        </div>
+      </div>
+      
+      <div *ngIf="!searching && !searchError && searchResults.length === 0" 
+           style="text-align: center; width: 100%;">
+        No events match your search criteria.
+      </div>
+    </div>
+  </div>
+</div>
