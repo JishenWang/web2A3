@@ -8,6 +8,7 @@
   text-align: center;
   padding: 40px 0;
   font-size: 18px;
+  color: #000; /* 加载提示文字也改为黑色 */
 }
 
 /* 提示框样式 */
@@ -55,7 +56,7 @@
   margin-right: 8px;
 }
 
-/* 表格样式 */
+/* 表格样式 - 核心修改：添加字体黑色 */
 .mt-4 {
   margin-top: 20px;
 }
@@ -66,14 +67,16 @@
 .table-header {
   background-color: #f8f9fa;
 }
+/* 表格表头和单元格文字统一改为黑色 */
 .table th,
 .table td {
   padding: 12px;
   text-align: left;
   border: 1px solid #ddd;
+  color: #000; /* 关键：虚拟数据字体设为黑色 */
 }
 .table-striped tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
+  background-color: #f9f9fa;
 }
 
 /* 空状态样式 */
@@ -81,9 +84,10 @@
   padding: 40px;
   background-color: #f8f9fa;
   border-radius: 4px;
+  color: #000; /* 空状态文字也改为黑色 */
 }
 
-/* 状态徽章样式 */
+/* 状态徽章样式 - 保留原有白色文字（与背景色对比） */
 .status-badge {
   display: inline-block;
   padding: 3px 8px;
